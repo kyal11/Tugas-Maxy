@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2023 at 09:20 AM
+-- Generation Time: Sep 20, 2023 at 10:30 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -172,7 +172,7 @@ CREATE TABLE `protection_validations` (
 
 CREATE TABLE `purchase_order_lines` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `product_id` bigint(20) DEFAULT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL,
   `price` float NOT NULL,
   `discont` float NOT NULL,
@@ -186,7 +186,8 @@ CREATE TABLE `purchase_order_lines` (
 --
 
 INSERT INTO `purchase_order_lines` (`id`, `product_id`, `qty`, `price`, `discont`, `total`, `created_at`, `updated_at`) VALUES
-(1, NULL, 20, 1000000, 50, 19500000, '2023-09-18 04:55:16', '2023-09-18 04:55:16');
+(2, 1, 10, 1000000, 10, 9900000, '2023-09-19 07:01:39', '2023-09-19 07:01:39'),
+(3, 4, 10, 1000000, 10, 9900000, '2023-09-19 07:03:19', '2023-09-19 07:03:19');
 
 -- --------------------------------------------------------
 
@@ -252,7 +253,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `active`, `confirmation_code`, `confirmed`, `remember_token`, `email_verified_at`, `created_at`, `updated_at`, `deleted_at`, `last_login`) VALUES
-(1, 'Admin', 'admin.laravel@labs64.com', '$2y$10$BtALd5cbYSmxZyyuMwwEVuTIP8dcinGlY8/6xDfpKFf/O.4RZzMzC', 1, '14804cfc-f5c7-42cb-bdc1-166ae0a08c70', 1, NULL, NULL, '2023-09-18 00:07:49', '2023-09-18 23:38:04', NULL, '2023-09-19 06:38:04'),
+(1, 'Admin', 'admin.laravel@labs64.com', '$2y$10$BtALd5cbYSmxZyyuMwwEVuTIP8dcinGlY8/6xDfpKFf/O.4RZzMzC', 1, '14804cfc-f5c7-42cb-bdc1-166ae0a08c70', 1, NULL, NULL, '2023-09-18 00:07:49', '2023-09-20 00:52:31', NULL, '2023-09-20 07:52:31'),
 (2, 'Demo', 'demo.laravel@labs64.com', '$2y$10$3BYDhlppK9aic4zIi2r5UOR2caL2iF/om/zCgdlTmKcQR1rTlblZe', 1, 'b0aba7ef-9bd0-464d-b303-c08796f4f26f', 1, NULL, NULL, '2023-09-18 00:07:49', '2023-09-18 00:07:49', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -381,7 +382,7 @@ ALTER TABLE `protection_validations`
 -- AUTO_INCREMENT for table `purchase_order_lines`
 --
 ALTER TABLE `purchase_order_lines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -416,6 +417,12 @@ ALTER TABLE `protection_shop_tokens`
 --
 ALTER TABLE `protection_validations`
   ADD CONSTRAINT `pv_foreign_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `purchase_order_lines`
+--
+ALTER TABLE `purchase_order_lines`
+  ADD CONSTRAINT `purchase_order_lines_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `social_accounts`
